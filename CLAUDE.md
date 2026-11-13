@@ -22,10 +22,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 All components live flat in `src/`, one default-exported function component per file. State is local `useState`; there is no context or state library.
 
-- `App.jsx` owns the `transactions` array (starting from hardcoded seed data) and the module-level `categories` list. It passes them down and adds new transactions through `handleAdd`.
+- `App.jsx` owns the `transactions` array (starting from hardcoded seed data) and the module-level `categories` list. It passes them down, adds new transactions through `handleAdd` and removes them through `handleDelete`.
 - `Summary.jsx` takes `transactions` and computes income, expense and balance totals on each render.
 - `TransactionForm.jsx` keeps its own input state (description, amount, type, category). On submit it builds the transaction object and calls `onAdd`, then resets the inputs.
-- `TransactionList.jsx` keeps its own filter state (type, category), filters `transactions` and renders the filters and the table.
+- `TransactionList.jsx` keeps its own filter state (type, category), filters `transactions` and renders the filters and the table. Each row has a Delete button that sets `pendingDelete`, which opens a `ConfirmDialog`; confirming calls `onDelete(id)`.
+- `ConfirmDialog.jsx` is a reusable modal (`title`, `message`, `confirmLabel`, `onConfirm`, `onCancel`). Escape, the Cancel button and clicking the backdrop all cancel. Its styles are the `.dialog*` rules in `App.css`.
 
 Data flows one way: `App` holds the list, children read it via props, and the form reports additions back through `onAdd`. State that only one component needs stays in that component.
 

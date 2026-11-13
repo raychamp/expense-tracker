@@ -146,3 +146,78 @@ th {
   font-size: 12px;
   color: #333;
 }
+
+.dialog-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 100;
+  animation: dialog-fade 0.15s ease-out;
+}
+
+.dialog {
+  width: 100%;
+  max-width: 380px;
+  padding: 20px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  animation: dialog-pop 0.15s ease-out;
+}
+
+.dialog h3 {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.dialog p {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.dialog-actions button {
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.dialog-cancel {
+  background: #fff;
+  border: 1px solid #ccc;
+  color: #333;
+}
+
+.dialog-cancel:hover {
+  background: #f5f5f5;
+}
+
+.dialog-confirm {
+  background: #c62828;
+  border: 1px solid #c62828;
+  color: #fff;
+}
+
+.dialog-confirm:hover {
+  background: #a51f1f;
+}
+
+@keyframes dialog-fade {
+  from { opacity: 0; }
+}
+
+@keyframes dialog-pop {
+  from { opacity: 0; transform: scale(0.95); }
+}

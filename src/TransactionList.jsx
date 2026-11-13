@@ -1,8 +1,10 @@
 import { useState } from "react";
+import ConfirmDialog from "./ConfirmDialog";
 
-function TransactionList({ transactions, categories }) {
+function TransactionList({ transactions, categories, onDelete }) {
   const [filterType, setFilterType] = useState("all");
   const [filterCategory, setFilterCategory] = useState("all");
+  const [pendingDelete, setPendingDelete] = useState(null);
 
   let filteredTransactions = transactions;
   if (filterType !== "all") {
@@ -36,6 +38,7 @@ function TransactionList({ transactions, categories }) {
             <th>Description</th>
             <th>Category</th>
             <th>Amount</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -47,10 +50,28 @@ function TransactionList({ transactions, categories }) {
               <td className={t.type === "income" ? "income-amount" : "expense-amount"}>
                 {t.type === "income" ? "+" : "-"}${t.amount}
               </td>
+              <td>
+                <button className="delete-btn" onClick={() => setPendingDelete(t)}>
+                  Delete
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      {pendingDelete && (
+        <ConfirmDialog
+          title="Delete transaction?"
+          message={`"${pendingDelete.description}" (${pendingDelete.type === "income" ? "+" : "-"}$${pendingDelete.amount}) will be permanently removed.`}
+          confirmLabel="Delete"
+          onConfirm={() => {
+            onDelete(pendingDelete.id);
+            setPendingDelete(null);
+          }}
+          onCancel={() => setPendingDelete(null)}
+        />
+      )}
     </div>
   );
 }
